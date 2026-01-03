@@ -3,87 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE ORIGIN ARCHIVE</title>
+    <title>THE ORIGIN PROTOCOL | V.1.0.0</title>
     <style>
-        :root { --cyan: #00f3ff; --gold: #d4af37; --bg: #050505; }
-        body { background: var(--bg); color: var(--gold); font-family: 'Courier New', monospace; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        :root { --neon: #00f3ff; --gold: #d4af37; --bg: #050505; --panel: #0d0d0d; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; padding: 10px; font-size: 14px; }
+        .grid { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 900px; margin: auto; }
+        @media (min-width: 768px) { .grid { grid-template-columns: 2fr 1.2fr; } }
         
-        .box { background: rgba(15, 15, 15, 0.95); border: 2px solid #333; padding: 30px; text-align: center; box-shadow: 0 0 50px rgba(0, 243, 255, 0.1); width: 350px; border-radius: 2px; position: relative; }
-        .neon-text { color: var(--cyan); text-shadow: 0 0 15px var(--cyan); text-transform: uppercase; letter-spacing: 6px; font-size: 1.8rem; margin-bottom: 20px; }
+        .box { border: 1px solid #222; background: var(--panel); padding: 15px; position: relative; overflow: hidden; }
+        .header { text-align: center; border-bottom: 2px solid var(--neon); padding-bottom: 10px; margin-bottom: 20px; }
+        .glitch { font-size: 1.8rem; letter-spacing: 8px; font-weight: bold; text-shadow: 0 0 10px var(--neon); }
         
-        input, select, button { width: 100%; padding: 14px; margin: 10px 0; background: #000; border: 1px solid var(--cyan); color: white; box-sizing: border-box; font-family: inherit; font-size: 0.8rem; letter-spacing: 1px; }
-        button { cursor: pointer; font-weight: bold; transition: 0.4s; text-transform: uppercase; }
-        button:hover { background: var(--cyan); color: black; box-shadow: 0 0 25px var(--cyan); }
-        
-        #admin-panel, #public-view { display: none; }
-        .log-box { height: 120px; overflow-y: auto; background: #000; color: var(--cyan); font-size: 0.7rem; text-align: left; padding: 10px; border: 1px solid #222; margin-top: 15px; border-left: 3px solid var(--cyan); }
-        .status-row { display: flex; justify-content: space-between; font-size: 0.6rem; color: var(--cyan); margin-bottom: 10px; opacity: 0.7; }
+        /* Mining & Stats */
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .stat-card { background: #000; border: 1px solid #333; padding: 10px; text-align: center; }
+        .value { display: block; font-size: 1.1rem; color: #fff; margin-top: 5px; }
+
+        /* Terminal Style */
+        #terminal { height: 180px; background: #000; border: 1px solid #222; padding: 10px; font-size: 0.7rem; overflow-y: auto; color: #00aaff; border-left: 3px solid var(--neon); }
+
+        /* Buttons & Inputs */
+        input, button, select { width: 100%; padding: 12px; margin: 8px 0; background: #111; border: 1px solid var(--neon); color: #fff; font-family: inherit; font-size: 0.8rem; box-sizing: border-box; }
+        button { cursor: pointer; transition: 0.3s; text-transform: uppercase; font-weight: bold; }
+        button:hover { background: var(--neon); color: #000; box-shadow: 0 0 20px var(--neon); }
+        .btn-gold { border-color: var(--gold); color: var(--gold); }
+        .btn-gold:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px var(--gold); }
+
+        /* Sections */
+        h3 { font-size: 0.9rem; color: var(--gold); text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 5px; margin-top: 0; }
+        .hidden { display: none; }
+        #king-gate { position: fixed; bottom: 0; right: 0; width: 10px; height: 10px; opacity: 0.05; cursor: crosshair; }
     </style>
 </head>
 <body>
 
-    <div id="gate-keeper" class="box">
-        <h1 class="neon-text">ORIGIN ARCHIVE</h1>
-        <div style="height: 2px; background: linear-gradient(90deg, transparent, var(--cyan), transparent); margin-bottom: 30px;"></div>
-        <button onclick="checkIdentity()">VERIFY IDENTITY</button>
-        <p style="font-size: 0.6rem; color: #444; margin-top: 20px; letter-spacing: 1px;">ENCRYPTED CONNECTION REQUIRED</p>
-    </div>
+<div class="header">
+    <div class="glitch">ORIGIN PROTOCOL</div>
+    <div style="font-size: 0.6rem; color: #555; letter-spacing: 2px;">DECENTRALIZED AUTONOMOUS SOVEREIGNTY | NO OWNER DETECTED</div>
+</div>
 
-    <div id="public-view" class="box">
-        <h1 class="neon-text" style="font-size: 1.2rem;">THE LEDGER</h1>
-        <div style="text-align: left; font-size: 0.75rem; border: 1px solid #222; padding: 15px; background: #080808; line-height: 1.8;">
-            <span style="color: var(--cyan)">[000]</span> THE PRIME ORIGIN - <span style="color:#555">CLAIMED</span><br>
-            <span style="color: var(--cyan)">[001]</span> THE ABSOLUTE SOVEREIGN - <span style="color:#555">LOCKED</span><br>
-            <span style="color: var(--cyan)">[002]</span> THE MARS CUSTODIAN - <span style="color:#555">RESERVED</span><br>
-            <span style="color: var(--cyan)">[003]</span> GENESIS SEEKER #001 - <span style="color:var(--gold)">OPEN</span>
+<div class="grid">
+    <div class="left">
+        <div class="box">
+            <div class="stat-grid">
+                <div class="stat-card">PROTOCOL STATUS<br><span class="value" style="color: #0f0;">AUTONOMOUS</span></div>
+                <div class="stat-card">MINED CREDITS<br><span class="value" id="credit-counter">0.00000000</span></div>
+            </div>
+            <div id="terminal">> INITIALIZING GENESIS BLOCK...<br>> PEER-TO-PEER MESH ACTIVE...<br>> WELCOME TO THE ARCHIVE.</div>
+            <button onclick="startMining()" id="mineBtn">START EFFORTLESS MINING</button>
         </div>
-        <p style="font-size: 0.7rem; margin-top: 20px; color: #666;">AWAITING COMMAND FROM THE ORIGINATOR...</p>
-    </div>
 
-    <div id="admin-panel" class="box" style="border-color: var(--gold); box-shadow: 0 0 50px rgba(212, 175, 55, 0.1);">
-        <div class="status-row">
-            <span>NETWORK: POLYGON</span>
-            <span>AUTH: GHOST KING</span>
+        <div class="box" style="margin-top: 15px;">
+            <h3>Public Ledger (Real-time)</h3>
+            <div id="ledger" style="font-size: 0.7rem; color: #777;">
+                [BLOCK 0092] Title 'Sovereign' requested by 0x71...<br>
+                [BLOCK 0091] 0.004 Credits distributed to Validators...<br>
+                [BLOCK 0090] Airdrop Tier 1: 85% Mined.
+            </div>
         </div>
-        <h2 style="color: var(--gold); letter-spacing: 4px; font-size: 1rem; margin-bottom: 20px;">ADMIN THRONE</h2>
-        
-        <input type="text" id="tName" placeholder="Enter Title Name...">
-        <select id="tTier">
-            <option>Royal Vault</option>
-            <option>Genesis 1000</option>
-            <option>Elite Tier</option>
-        </select>
-        <button onclick="summon()" style="border-color: var(--gold); color: var(--gold);">SUMMON TITLE</button>
-        
-        <div class="log-box" id="logs">> System Ready.<br>> Awaiting King's command...</div>
-        <button onclick="location.reload()" style="border: none; color: #555; font-size: 0.6rem; margin-top: 10px;">SECURE LOGOUT</button>
     </div>
 
-    <script>
-        const KING = "0xfb713517279cafe5c14706674561f2bc922547a5".toLowerCase();
+    <div class="right">
+        <div class="box">
+            <h3>Request Title (Claim Ticket)</h3>
+            <input type="text" id="reqTitle" placeholder="Desired Title (e.g. The Immortal)">
+            <input type="text" id="wallet" placeholder="Your Wallet Address">
+            <button class="btn-gold" onclick="requestTitle()">SUBMIT CLAIM REQUEST</button>
+            <p style="font-size: 0.6rem; color: #555; text-align: center;">Wait for Validation System (Miners) to confirm.</p>
+        </div>
 
-        async function checkIdentity() {
-            if (window.ethereum) {
-                try {
-                    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-                    const user = accounts[0].toLowerCase();
-                    document.getElementById('gate-keeper').style.display = 'none';
-                    if (user === KING) {
-                        document.getElementById('admin-panel').style.display = 'block';
-                    } else {
-                        document.getElementById('public-view').style.display = 'block';
-                    }
-                } catch (err) { alert("Access Denied."); }
-            } else { alert("Please use MetaMask Browser."); }
-        }
+        <div class="box" style="margin-top: 15px;">
+            <h3>Ambassador & Airdrop</h3>
+            <p style="font-size: 0.7rem;">Share hash to boost Mining Speed (+25%)</p>
+            <input type="text" readonly value="https://king-toa.github.io/gate/?ref=genesis">
+            <button style="font-size: 0.7rem; padding: 5px;">JOIN AIRDROP WAITLIST</button>
+        </div>
+    </div>
+</div>
 
-        function summon() {
-            const val = document.getElementById('tName').value;
-            if(val) {
-                document.getElementById('logs').innerHTML += `<br>> [ETCHED]: ${val} added to Archive.`;
-                document.getElementById('tName').value = "";
-            }
+<div id="admin-panel" class="box hidden" style="position:fixed; top:10%; left:50%; transform:translate(-50%, 0); z-index:100; border-color: var(--gold); width: 350px;">
+    <h2 style="color:var(--gold)">CORE ENGINE</h2>
+    <input type="text" id="adminCommand" placeholder="Command...">
+    <button onclick="execute()">EXECUTE OVERRIDE</button>
+    <button onclick="document.getElementById('admin-panel').classList.add('hidden')">CLOSE</button>
+</div>
+
+<div id="king-gate" onclick="openGate()"></div>
+
+<script>
+    // 1. AUTOMATIC LOGS (The Illusion)
+    const logs = [
+        "> [VALIDATOR]: Node 07 verified hash...",
+        "> [SYSTEM]: Syncing with Polygon Mainnet...",
+        "> [AIRDROP]: Tier 1 snapshot in progress...",
+        "> [MINING]: Computational power stable.",
+        "> [LEDGER]: Anonymous title request received.",
+        "> [SECURITY]: 256-bit encryption active."
+    ];
+    setInterval(() => {
+        const term = document.getElementById('terminal');
+        const ledger = document.getElementById('ledger');
+        const randLog = logs[Math.floor(Math.random() * logs.length)];
+        term.innerHTML += `<br>` + randLog;
+        term.scrollTop = term.scrollHeight;
+        if(Math.random() > 0.7) ledger.innerHTML = `[BLOCK ${Math.floor(Math.random()*1000)}] Activity Detected...<br>` + ledger.innerHTML;
+    }, 4000);
+
+    // 2. EFFORTLESS MINING
+    let credits = 0;
+    function startMining() {
+        document.getElementById('mineBtn').innerText = "MINING ACTIVE...";
+        document.getElementById('mineBtn').style.borderColor = "#0f0";
+        setInterval(() => {
+            credits += Math.random() * 0.000001;
+            document.getElementById('credit-counter').innerText = credits.toFixed(8);
+        }, 1000);
+    }
+
+    // 3. CLAIM REQUEST
+    function requestTitle() {
+        const t = document.getElementById('reqTitle').value;
+        if(t) {
+            alert("Ticket Submitted to the Protocol. Validation may take 24-48 hours.");
+            document.getElementById('terminal').innerHTML += `<br><span style="color:var(--gold)">> [CLAIM]: Request for '${t}' added to queue.</span>`;
+            document.getElementById('reqTitle').value = "";
         }
-    </script>
+    }
+
+    // 4. HIDDEN KING ACCESS
+    const KING_WALLET = "0xfb713517279cafe5c14706674561f2bc922547a5".toLowerCase();
+    async function openGate() {
+        if (window.ethereum) {
+            const acc = await ethereum.request({ method: 'eth_requestAccounts' });
+            if(acc[0].toLowerCase() === KING_WALLET) {
+                document.getElementById('admin-panel').classList.remove('hidden');
+            } else { alert("PROTOCOL ERROR: NOT THE ORIGINATOR."); }
+        }
+    }
+</script>
+
 </body>
 </html>
