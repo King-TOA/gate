@@ -3,7 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE ORIGIN PROTOCOL | V.1.0.0</title>
+    <title>THE ORIGIN ARCHIVE | RELIC PROTOCOL</title>
+    <style>
+        :root {
+            --gold: #C5A059;
+            --silver: #C0C0C0;
+            --obsidian: #0A0A0B;
+            --border: #1C1C1E;
+            --text: #E5E5E7;
+        }
+
+        body {
+            background-color: var(--obsidian);
+            color: var(--text);
+            font-family: 'Garamond', serif; /* Elegant Classic Touch */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            border-bottom: 1px solid var(--border);
+            width: 100%;
+            background: radial-gradient(circle, #1a1a1a 0%, #0a0a0b 100%);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            letter-spacing: 12px;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin: 0;
+            text-shadow: 0px 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .protocol-status {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--silver);
+            margin-top: 10px;
+            opacity: 0.6;
+        }
+
+        .main-vault {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            width: 90%;
+            max-width: 1100px;
+            padding: 50px 0;
+        }
+
+        .panel {
+            background: #0F0F11;
+            border: 1px solid var(--border);
+            padding: 30px;
+            position: relative;
+            transition: border 0.5s;
+        }
+
+        .panel:hover {
+            border-color: var(--gold);
+        }
+
+        h2 {
+            font-size: 0.9rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+
+        .data-value {
+            font-size: 1.8rem;
+            color: var(--text);
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .label {
+            font-size: 0.65rem;
+            color: var(--silver);
+            text-transform: uppercase;
+            opacity: 0.5;
+        }
+
+        input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border);
+            color: var(--gold);
+            padding: 12px 5px;
+            margin: 20px 0;
+            font-family: inherit;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 15px;
+ARCHIVE | RELIC PROTOCOL</title>
+PROTOCOL | V.1.0.0</title>
     <style>
         :root { --neon: #00f3ff; --gold: #d4af37; --bg: #050505; --panel: #0d0d0d; }
         body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; padding: 10px; font-size: 14px; }
@@ -106,41 +216,117 @@
         const randLog = logs[Math.floor(Math.random() * logs.length)];
         term.innerHTML += `<br>` + randLog;
         term.scrollTop = term.scrollHeight;
-        if(Math.random() > 0.7) ledger.innerHTML = `[BLOCK ${Math.floor(Math.random()*1000)}] Activity Detected...<br>` + ledger.innerHTML;
-    }, 4000);
-
-    // 2. EFFORTLESS MINING
-    let credits = 0;
-    function startMining() {
-        document.getElementById('mineBtn').innerText = "MINING ACTIVE...";
-        document.getElementById('mineBtn').style.borderColor = "#0f0";
-        setInterval(() => {
-            credits += Math.random() * 0.000001;
-            document.getElementById('credit-counter').innerText = credits.toFixed(8);
-        }, 1000);
-    }
-
-    // 3. CLAIM REQUEST
-    function requestTitle() {
-        const t = document.getElementById('reqTitle').value;
-        if(t) {
-            alert("Ticket Submitted to the Protocol. Validation may take 24-48 hours.");
-            document.getElementById('terminal').innerHTML += `<br><span style="color:var(--gold)">> [CLAIM]: Request for '${t}' added to queue.</span>`;
-            document.getElementById('reqTitle').value = "";
+    <style>
+        :root {
+            --gold: #C5A059;
+            --silver: #C0C0C0;
+            --obsidian: #0A0A0B;
+            --border: #1C1C1E;
+            --text: #E5E5E7;
         }
-    }
 
-    // 4. HIDDEN KING ACCESS
-    const KING_WALLET = "0xfb713517279cafe5c14706674561f2bc922547a5".toLowerCase();
-    async function openGate() {
-        if (window.ethereum) {
-            const acc = await ethereum.request({ method: 'eth_requestAccounts' });
-            if(acc[0].toLowerCase() === KING_WALLET) {
-                document.getElementById('admin-panel').classList.remove('hidden');
-            } else { alert("PROTOCOL ERROR: NOT THE ORIGINATOR."); }
+        body {
+            background-color: var(--obsidian);
+            color: var(--text);
+            font-family: 'Garamond', serif; /* Elegant Classic Touch */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
-    }
-</script>
 
-</body>
-</html>
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            border-bottom: 1px solid var(--border);
+            width: 100%;
+            background: radial-gradient(circle, #1a1a1a 0%, #0a0a0b 100%);
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            letter-spacing: 12px;
+            color: var(--gold);
+            text-transform: uppercase;
+            margin: 0;
+            text-shadow: 0px 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .protocol-status {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            color: var(--silver);
+            margin-top: 10px;
+            opacity: 0.6;
+        }
+
+        .main-vault {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            width: 90%;
+            max-width: 1100px;
+            padding: 50px 0;
+        }
+
+        .panel {
+            background: #0F0F11;
+            border: 1px solid var(--border);
+            padding: 30px;
+            position: relative;
+            transition: border 0.5s;
+        }
+
+        .panel:hover {
+            border-color: var(--gold);
+        }
+
+        h2 {
+            font-size: 0.9rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+
+        .data-value {
+            font-size: 1.8rem;
+            color: var(--text);
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .label {
+            font-size: 0.65rem;
+            color: var(--silver);
+            text-transform: uppercase;
+            opacity: 0.5;
+        }
+
+        input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--border);
+            color: var(--gold);
+            padding: 12px 5px;
+            margin: 20px 0;
+            font-family: inherit;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 15px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: bold;
+            transition: 0.3s;
+
