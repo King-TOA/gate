@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE ORIGIN ARCHIVE</title>
+    <style>
+        :root { --cyan: #00f3ff; --gold: #d4af37; --bg: #050505; }
+        body { background: var(--bg); color: var(--gold); font-family: 'Courier New', monospace; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        
+        .box { background: rgba(15, 15, 15, 0.95); border: 2px solid #333; padding: 25px; text-align: center; box-shadow: 0 0 40px rgba(0, 243, 255, 0.15); width: 350px; border-radius: 5px; }
+        .neon-text { color: var(--cyan); text-shadow: 0 0 10px var(--cyan); text-transform: uppercase; letter-spacing: 3px; font-size: 1.5rem; margin-bottom: 5px; }
+        
+        input, select, button { width: 100%; padding: 12px; margin: 10px 0; background: #111; border: 1px solid var(--cyan); color: white; box-sizing: border-box; font-family: inherit; }
+        button { cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button:hover { background: var(--cyan); color: black; box-shadow: 0 0 20px var(--cyan); }
+        
+        .status-row { display: flex; justify-content: space-between; font-size: 0.6rem; color: var(--cyan); margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 5px; }
+        #admin-panel, #public-view { display: none; }
+        .log-box { height: 100px; overflow-y: auto; background: #000; color: var(--cyan); font-size: 0.7rem; text-align: left; padding: 10px; border: 1px solid #222; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div id="gate-keeper" class="box">
+        <h1 class="neon-text">ORIGIN ARCHIVE</h1>
+        <p style="font-size: 0.8rem; letter-spacing: 2px;">THE SUPREME REGISTRY</p>
+        <hr border="1" color="#333">
+        <p style="font-size: 0.9rem; margin: 20px 0;">IDENTITY VERIFICATION REQUIRED</p>
+        <button onclick="checkIdentity()">CONNECT ROYAL SEAL</button>
+    </div>
+
+    <div id="public-view" class="box">
+        <h1 class="neon-text">ARCHIVE VIEW</h1>
+        <p style="font-size: 0.7rem; color: #777;">STATUS: READ-ONLY</p>
+        <div style="text-align: left; font-size: 0.8rem; border: 1px solid #222; padding: 10px; margin-top:10px;">
+            [000] THE PRIME ORIGIN - CLAIMED<br>
+            [001] THE ABSOLUTE SOVEREIGN - LOCKED<br>
+            [002] THE MARS CUSTODIAN - RESERVED<br>
+            [003] GENESIS SEEKER #001 - OPEN
+        </div>
+        <p style="font-size: 0.8rem; margin-top: 15px;">The Summoning Gate is currently closed by the King.</p>
+    </div>
+
+    <div id="admin-panel" class="box" style="border-color: var(--gold);">
+        <div class="status-row">
+            <span>SYS: ACTIVE</span>
+            <span>ORIGINATOR: GHOST KING</span>
+        </div>
+        <h1 style="color: var(--gold); margin: 0; font-size: 1.2rem;">ADMIN THRONE</h1>
+        <p style="font-size: 0.6rem; letter-spacing: 2px; color: var(--gold);">SUPREME CONTROL PANEL</p>
+        
+        <input type="text" id="tName" placeholder="Enter Title Name...">
+        <select id="tTier">
+            <option>Royal Vault (Locked)</option>
+            <option>Genesis 1000 (Early Bird)</option>
+            <option>Billionaire Tier</option>
+        </select>
+        <button onclick="summon()">EXECUTE SUMMONING</button>
+        
+        <div class="log-box" id="logs">[SYSTEM]: Identity Verified. Welcome, King.</div>
+        <button onclick="location.reload()" style="border-color: #ff4444; color: #ff4444; font-size: 0.7rem; padding: 5px;">DISCONNECT</button>
+    </div>
+
+    <script>
+        const KING = "0xfb713517279cafe5c14706674561f2bc922547a5".toLowerCase();
+
+        async function checkIdentity() {
+            if (window.ethereum) {
+                try {
+                    const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+                    const user = accounts[0].toLowerCase();
+                    
+                    document.getElementById('gate-keeper').style.display = 'none';
+                    
+                    if (user === KING) {
+                        document.getElementById('admin-panel').style.display = 'block';
+                    } else {
+                        document.getElementById('public-view').style.display = 'block';
+                    }
+                } catch (err) {
+                    alert("Verification Failed.");
+                }
+            } else {
+                alert("Please open this in MetaMask Browser.");
+            }
+        }
+
+        function summon() {
+            const val = document.getElementById('tName').value;
+            if(val) {
+                document.getElementById('logs').innerHTML += `<br>> [SUMMONED]: ${val} etched successfully.`;
+                document.getElementById('tName').value = "";
+            }
+        }
+    </script>
+</body>
+</html>
