@@ -3,330 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE ORIGIN ARCHIVE | RELIC PROTOCOL</title>
+    <title>THE ORIGIN ARCHIVE | ADVANCED</title>
     <style>
-        :root {
-            --gold: #C5A059;
-            --silver: #C0C0C0;
-            --obsidian: #0A0A0B;
-            --border: #1C1C1E;
-            --text: #E5E5E7;
-        }
-
-        body {
-            background-color: var(--obsidian);
-            color: var(--text);
-            font-family: 'Garamond', serif; /* Elegant Classic Touch */
-            margin: 0;
+        :root { --gold: #d4af37; --tech-blue: #00f3ff; --bg-overlay: rgba(0, 0, 0, 0.85); }
+        
+        body { 
+            margin: 0; 
+            padding: 0;
+            background: url('https://www.transparenttextures.com/patterns/dark-matter.png'), url('https://images.unsplash.com/photo-1614850523296-e8c0a09e0a6d?auto=format&fit=crop&q=80&w=2070'); /* Ancient/Stone aesthetic background */
+            background-size: cover;
+            background-attachment: fixed;
+            color: var(--gold);
+            font-family: 'Courier New', monospace;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
         }
 
-        header {
-            text-align: center;
-            padding: 60px 20px;
-            border-bottom: 1px solid var(--border);
-            width: 100%;
-            background: radial-gradient(circle, #1a1a1a 0%, #0a0a0b 100%);
-        }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-overlay); z-index: -1; }
 
-        .logo {
-            font-size: 2.5rem;
-            letter-spacing: 12px;
-            color: var(--gold);
-            text-transform: uppercase;
-            margin: 0;
-            text-shadow: 0px 4px 10px rgba(0,0,0,0.5);
-        }
+        header { padding: 30px; text-align: center; width: 100%; border-bottom: 1px solid #333; }
+        .logo { font-size: 2rem; letter-spacing: 8px; text-shadow: 0 0 15px var(--gold); }
 
-        .protocol-status {
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            color: var(--silver);
-            margin-top: 10px;
-            opacity: 0.6;
-        }
+        .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; width: 95%; max-width: 1200px; padding: 20px; box-sizing: border-box; }
 
-        .main-vault {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            width: 90%;
-            max-width: 1100px;
-            padding: 50px 0;
-        }
+        .panel { background: rgba(10, 10, 10, 0.95); border: 1px solid #222; padding: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.5); position: relative; }
+        .panel h2 { font-size: 0.9rem; border-bottom: 1px solid var(--gold); padding-bottom: 10px; margin-top: 0; letter-spacing: 2px; }
 
-        .panel {
-            background: #0F0F11;
-            border: 1px solid var(--border);
-            padding: 30px;
-            position: relative;
-            transition: border 0.5s;
-        }
+        /* 1. Universal Chatbox */
+        #chat-container { height: 200px; overflow-y: auto; background: #000; border: 1px solid #111; padding: 10px; font-size: 0.8rem; color: var(--tech-blue); margin-bottom: 10px; }
+        #chat-input { width: calc(100% - 22px); background: #000; border: 1px solid #333; color: white; padding: 10px; }
 
-        .panel:hover {
-            border-color: var(--gold);
-        }
+        /* 2. Bidding Section */
+        .bid-info { font-size: 1.2rem; margin: 15px 0; color: white; }
+        .timer { color: var(--tech-blue); font-size: 0.8rem; margin-bottom: 15px; }
 
-        h2 {
-            font-size: 0.9rem;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 0;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 15px;
-        }
+        /* 3. Title Owner List */
+        .owner-list { font-size: 0.8rem; list-style: none; padding: 0; }
+        .owner-item { padding: 8px 0; border-bottom: 1px solid #111; display: flex; justify-content: space-between; }
 
-        .data-value {
-            font-size: 1.8rem;
-            color: var(--text);
-            margin: 20px 0;
-            font-family: 'Courier New', monospace;
-        }
+        /* 4. Wallet Detail */
+        .wallet-box { font-size: 0.7rem; word-break: break-all; color: #888; background: #000; padding: 10px; border: 1px solid #222; }
 
-        .label {
-            font-size: 0.65rem;
-            color: var(--silver);
-            text-transform: uppercase;
-            opacity: 0.5;
-        }
+        /* 5. Social Link */
+        .social-link { margin-top: 15px; display: block; color: var(--gold); text-decoration: none; font-size: 0.8rem; border: 1px solid var(--gold); padding: 10px; text-align: center; transition: 0.3s; }
+        .social-link:hover { background: var(--gold); color: black; }
 
-        input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid var(--border);
-            color: var(--gold);
-            padding: 12px 5px;
-            margin: 20px 0;
-            font-family: inherit;
-            outline: none;
-        }
+        button { width: 100%; background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 12px; cursor: pointer; text-transform: uppercase; font-weight: bold; margin-top: 10px; }
+        button:hover { background: var(--gold); color: black; }
 
-        button {
-            width: 100%;
-            background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            padding: 15px;
-ARCHIVE | RELIC PROTOCOL</title>
-PROTOCOL | V.1.0.0</title>
-    <style>
-        :root { --neon: #00f3ff; --gold: #d4af37; --bg: #050505; --panel: #0d0d0d; }
-        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; margin: 0; padding: 10px; font-size: 14px; }
-        .grid { display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 900px; margin: auto; }
-        @media (min-width: 768px) { .grid { grid-template-columns: 2fr 1.2fr; } }
-        
-        .box { border: 1px solid #222; background: var(--panel); padding: 15px; position: relative; overflow: hidden; }
-        .header { text-align: center; border-bottom: 2px solid var(--neon); padding-bottom: 10px; margin-bottom: 20px; }
-        .glitch { font-size: 1.8rem; letter-spacing: 8px; font-weight: bold; text-shadow: 0 0 10px var(--neon); }
-        
-        /* Mining & Stats */
-        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-        .stat-card { background: #000; border: 1px solid #333; padding: 10px; text-align: center; }
-        .value { display: block; font-size: 1.1rem; color: #fff; margin-top: 5px; }
-
-        /* Terminal Style */
-        #terminal { height: 180px; background: #000; border: 1px solid #222; padding: 10px; font-size: 0.7rem; overflow-y: auto; color: #00aaff; border-left: 3px solid var(--neon); }
-
-        /* Buttons & Inputs */
-        input, button, select { width: 100%; padding: 12px; margin: 8px 0; background: #111; border: 1px solid var(--neon); color: #fff; font-family: inherit; font-size: 0.8rem; box-sizing: border-box; }
-        button { cursor: pointer; transition: 0.3s; text-transform: uppercase; font-weight: bold; }
-        button:hover { background: var(--neon); color: #000; box-shadow: 0 0 20px var(--neon); }
-        .btn-gold { border-color: var(--gold); color: var(--gold); }
-        .btn-gold:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px var(--gold); }
-
-        /* Sections */
-        h3 { font-size: 0.9rem; color: var(--gold); text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 5px; margin-top: 0; }
-        .hidden { display: none; }
-        #king-gate { position: fixed; bottom: 0; right: 0; width: 10px; height: 10px; opacity: 0.05; cursor: crosshair; }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <div class="glitch">ORIGIN PROTOCOL</div>
-    <div style="font-size: 0.6rem; color: #555; letter-spacing: 2px;">DECENTRALIZED AUTONOMOUS SOVEREIGNTY | NO OWNER DETECTED</div>
-</div>
+<div class="overlay"></div>
 
-<div class="grid">
-    <div class="left">
-        <div class="box">
-            <div class="stat-grid">
-                <div class="stat-card">PROTOCOL STATUS<br><span class="value" style="color: #0f0;">AUTONOMOUS</span></div>
-                <div class="stat-card">MINED CREDITS<br><span class="value" id="credit-counter">0.00000000</span></div>
-            </div>
-            <div id="terminal">> INITIALIZING GENESIS BLOCK...<br>> PEER-TO-PEER MESH ACTIVE...<br>> WELCOME TO THE ARCHIVE.</div>
-            <button onclick="startMining()" id="mineBtn">START EFFORTLESS MINING</button>
-        </div>
+<header>
+    <div class="logo">THE ORIGIN ARCHIVE</div>
+</header>
 
-        <div class="box" style="margin-top: 15px;">
-            <h3>Public Ledger (Real-time)</h3>
-            <div id="ledger" style="font-size: 0.7rem; color: #777;">
-                [BLOCK 0092] Title 'Sovereign' requested by 0x71...<br>
-                [BLOCK 0091] 0.004 Credits distributed to Validators...<br>
-                [BLOCK 0090] Airdrop Tier 1: 85% Mined.
-            </div>
-        </div>
+<div class="container">
+    
+    <div class="panel">
+        <h2>ACTIVE BIDDING [ERA 001]</h2>
+        <div class="bid-info">THE GENESIS MONARCH</div>
+        <div class="timer">TIME REMAINING: 40D 23H 59M</div>
+        <input type="text" id="bidAmount" placeholder="Enter $RELIC Bid" style="width: 100%; background: #000; border: 1px solid #333; color: white; padding: 10px; box-sizing: border-box;">
+        <button onclick="placeBid()">COMMIT STRATEGIC BID</button>
     </div>
 
-    <div class="right">
-        <div class="box">
-            <h3>Request Title (Claim Ticket)</h3>
-            <input type="text" id="reqTitle" placeholder="Desired Title (e.g. The Immortal)">
-            <input type="text" id="wallet" placeholder="Your Wallet Address">
-            <button class="btn-gold" onclick="requestTitle()">SUBMIT CLAIM REQUEST</button>
-            <p style="font-size: 0.6rem; color: #555; text-align: center;">Wait for Validation System (Miners) to confirm.</p>
+    <div class="panel">
+        <h2>UNIVERSAL COMMUNICATIONS</h2>
+        <div id="chat-container">
+            > Initializing encrypted link...<br>
+            > System: Connection established. Welcome, Seeker.
         </div>
-
-        <div class="box" style="margin-top: 15px;">
-            <h3>Ambassador & Airdrop</h3>
-            <p style="font-size: 0.7rem;">Share hash to boost Mining Speed (+25%)</p>
-            <input type="text" readonly value="https://king-toa.github.io/gate/?ref=genesis">
-            <button style="font-size: 0.7rem; padding: 5px;">JOIN AIRDROP WAITLIST</button>
-        </div>
+        <input type="text" id="chat-input" placeholder="Type message..." onkeypress="sendMessage(event)">
     </div>
-</div>
 
-<div id="admin-panel" class="box hidden" style="position:fixed; top:10%; left:50%; transform:translate(-50%, 0); z-index:100; border-color: var(--gold); width: 350px;">
-    <h2 style="color:var(--gold)">CORE ENGINE</h2>
-    <input type="text" id="adminCommand" placeholder="Command...">
-    <button onclick="execute()">EXECUTE OVERRIDE</button>
-    <button onclick="document.getElementById('admin-panel').classList.add('hidden')">CLOSE</button>
-</div>
+    <div class="panel">
+        <h2>LEGACY HOLDERS</h2>
+        <ul class="owner-list">
+            <li class="owner-item"><span>01. [EMPTY]</span> <span style="color:white;">- - -</span></li>
+            <li class="owner-item"><span>02. [EMPTY]</span> <span style="color:white;">- - -</span></li>
+            <li class="owner-item"><span>03. [EMPTY]</span> <span style="color:white;">- - -</span></li>
+        </ul>
+    </div>
 
-<div id="king-gate" onclick="openGate()"></div>
+    <div class="panel">
+        <h2>SOVEREIGN DETAILS</h2>
+        <div class="label" style="font-size: 0.6rem; margin-bottom: 5px;">CONNECTED WALLET:</div>
+        <div class="wallet-box" id="wallet-addr">0x... (Not Connected)</div>
+        <button onclick="connectWallet()">CONNECT SOVEREIGN KEY</button>
+        
+        <a href="https://twitter.com/your_handle" class="social-link" target="_blank">THE ORIGIN HUB (SOCIAL)</a>
+    </div>
+
+</div>
 
 <script>
-    // 1. AUTOMATIC LOGS (The Illusion)
-    const logs = [
-        "> [VALIDATOR]: Node 07 verified hash...",
-        "> [SYSTEM]: Syncing with Polygon Mainnet...",
-        "> [AIRDROP]: Tier 1 snapshot in progress...",
-        "> [MINING]: Computational power stable.",
-        "> [LEDGER]: Anonymous title request received.",
-        "> [SECURITY]: 256-bit encryption active."
-    ];
-    setInterval(() => {
-        const term = document.getElementById('terminal');
-        const ledger = document.getElementById('ledger');
-        const randLog = logs[Math.floor(Math.random() * logs.length)];
-        term.innerHTML += `<br>` + randLog;
-        term.scrollTop = term.scrollHeight;
-    <style>
-        :root {
-            --gold: #C5A059;
-            --silver: #C0C0C0;
-            --obsidian: #0A0A0B;
-            --border: #1C1C1E;
-            --text: #E5E5E7;
+    function sendMessage(e) {
+        if (e.key === 'Enter') {
+            const input = document.getElementById('chat-input');
+            const chat = document.getElementById('chat-container');
+            if(input.value) {
+                chat.innerHTML += `<br><span style="color: white;">> Anonymous:</span> ${input.value}`;
+                input.value = '';
+                chat.scrollTop = chat.scrollHeight;
+            }
         }
+    }
 
-        body {
-            background-color: var(--obsidian);
-            color: var(--text);
-            font-family: 'Garamond', serif; /* Elegant Classic Touch */
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
+    function connectWallet() {
+        alert("Establishing handshake with Blockchain...");
+        document.getElementById('wallet-addr').innerText = "0xfB713517279Cafe5c14706674561f2BC922547a5";
+    }
 
-        header {
-            text-align: center;
-            padding: 60px 20px;
-            border-bottom: 1px solid var(--border);
-            width: 100%;
-            background: radial-gradient(circle, #1a1a1a 0%, #0a0a0b 100%);
-        }
+    function placeBid() {
+        const val = document.getElementById('bidAmount').value;
+        if(val) alert(`Commitment of ${val} $RELIC sent to the Nodes.`);
+    }
+</script>
 
-        .logo {
-            font-size: 2.5rem;
-            letter-spacing: 12px;
-            color: var(--gold);
-            text-transform: uppercase;
-            margin: 0;
-            text-shadow: 0px 4px 10px rgba(0,0,0,0.5);
-        }
-
-        .protocol-status {
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            color: var(--silver);
-            margin-top: 10px;
-            opacity: 0.6;
-        }
-
-        .main-vault {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            width: 90%;
-            max-width: 1100px;
-            padding: 50px 0;
-        }
-
-        .panel {
-            background: #0F0F11;
-            border: 1px solid var(--border);
-            padding: 30px;
-            position: relative;
-            transition: border 0.5s;
-        }
-
-        .panel:hover {
-            border-color: var(--gold);
-        }
-
-        h2 {
-            font-size: 0.9rem;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-top: 0;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 15px;
-        }
-
-        .data-value {
-            font-size: 1.8rem;
-            color: var(--text);
-            margin: 20px 0;
-            font-family: 'Courier New', monospace;
-        }
-
-        .label {
-            font-size: 0.65rem;
-            color: var(--silver);
-            text-transform: uppercase;
-            opacity: 0.5;
-        }
-
-        input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid var(--border);
-            color: var(--gold);
-            padding: 12px 5px;
-            margin: 20px 0;
-            font-family: inherit;
-            outline: none;
-        }
-
-        button {
-            width: 100%;
-            background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            padding: 15px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: bold;
-            transition: 0.3s;
+</body>
+</html>
 
